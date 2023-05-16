@@ -1,0 +1,1 @@
+poetry publish --build --username "plutous-io" --password "gnK7ugcbNL?a;H/"
