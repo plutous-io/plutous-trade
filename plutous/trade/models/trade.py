@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -9,6 +11,7 @@ from .position import Position
 
 
 class Trade(Base):
+    position_id: Mapped[int] = mapped_column(ForeignKey(Position.id))
     identifier: Mapped[str]
     symbol: Mapped[str]
     exchange: Mapped[Exchange] = mapped_column(Enum(Exchange, schema="public"))
@@ -17,7 +20,8 @@ class Trade(Base):
     side: Mapped[PositionSide] = mapped_column(Enum(PositionSide))
     price: Mapped[float]
     quantity: Mapped[float]
-    position_id: Mapped[int] = mapped_column(ForeignKey(Position.id))
+    realized_pnl: Mapped[float]
+    datetime: Mapped[datetime]
 
     position: Mapped[Position] = relationship(Position, back_populates="trades")
 
