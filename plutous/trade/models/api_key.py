@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, declared_attr, mapped_column, relationship
 from sqlalchemy_utils import EncryptedType
 
 from plutous.config import config
-from plutous.trade.enums import Exchange
+from plutous.enums import Exchange
 
 from .base import Base, Enum
 
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class ApiKey(Base):
-    exchange: Mapped[Exchange] = mapped_column(Enum(Exchange))
+    exchange: Mapped[Exchange] = mapped_column(Enum(Exchange, schema="public"))
     name: Mapped[str]
     key: Mapped[str]
     secret: Mapped[str] = mapped_column(EncryptedType(String, config.encryption_key))

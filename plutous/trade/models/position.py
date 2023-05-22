@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from plutous.trade.enums import AssetType, Exchange, PositionSide
+from plutous.enums import Exchange
+from plutous.trade.enums import AssetType, PositionSide
 
 from .base import Base, Enum
 from .bot import Bot
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
 
 class Position(Base):
     asset_type: Mapped[AssetType] = mapped_column(Enum(AssetType))
-    exchange: Mapped[Exchange] = mapped_column(Enum(Exchange))
+    exchange: Mapped[Exchange] = mapped_column(Enum(Exchange, schema="public"))
     symbol: Mapped[str]
     side: Mapped[PositionSide] = mapped_column(Enum(PositionSide))
     quantity: Mapped[float]

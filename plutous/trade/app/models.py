@@ -1,12 +1,7 @@
 from pydantic import BaseModel
 
-from plutous.trade.enums import (
-    Exchange,
-    StrategyDirection,
-    StrategyType,
-    AssetType,
-    BotType
-)
+from plutous.enums import Exchange
+from plutous.trade.enums import AssetType, BotType, StrategyDirection, StrategyType
 
 
 class StrategyPost(BaseModel):
