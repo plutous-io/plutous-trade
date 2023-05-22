@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 
 from plutous.trade.models import Base
 
@@ -69,6 +69,8 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
+        connection.execute(text("set search_path to trade"))
+        connection.dialect.default_schema_name = "trade"
 
         with context.begin_transaction():
             context.run_migrations()
