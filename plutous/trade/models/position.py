@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -21,7 +21,7 @@ class Position(Base):
     side: Mapped[PositionSide] = mapped_column(Enum(PositionSide))
     quantity: Mapped[float]
     opened_at: Mapped[datetime]
-    closed_at: Mapped[datetime]
+    closed_at: Mapped[Optional[datetime]]
     bot_id: Mapped[int] = mapped_column(ForeignKey(Bot.id))
 
     bot: Mapped[Bot] = relationship(Bot, back_populates="positions")
