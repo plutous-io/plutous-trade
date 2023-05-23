@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from plutous.app.utils.session import get_session
@@ -9,6 +10,14 @@ from .models import ApiKeyPost, BotPost, StrategyPost
 app = FastAPI(
     title="Plutous Trade API",
     version="0.0.1",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 try:
