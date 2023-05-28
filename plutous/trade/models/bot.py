@@ -19,6 +19,7 @@ class Bot(Base):
     strategy_id: Mapped[int] = mapped_column(ForeignKey(Strategy.id))
     api_key_id: Mapped[int] = mapped_column(ForeignKey(ApiKey.id))
     allocated_capital: Mapped[float]
+    max_position: Mapped[int]
     accumulate: Mapped[bool]
 
     api_key: Mapped[ApiKey] = relationship(ApiKey, back_populates="bots")

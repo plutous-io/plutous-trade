@@ -19,6 +19,7 @@ class BotPost(BaseModel):
     type: BotType
     allocated_capital: float
     accumulate: bool = True
+    max_position: int = 1
 
 
 class ApiKeyPost(BaseModel):

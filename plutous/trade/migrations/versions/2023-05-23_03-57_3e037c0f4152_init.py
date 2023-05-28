@@ -56,6 +56,7 @@ def upgrade() -> None:
     sa.Column('strategy_id', sa.Integer(), nullable=False),
     sa.Column('api_key_id', sa.Integer(), nullable=False),
     sa.Column('allocated_capital', sa.Float(), nullable=False),
+    sa.Column('max_position', sa.Integer(), nullable=False),
     sa.Column('accumulate', sa.Boolean(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
