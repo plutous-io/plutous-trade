@@ -19,7 +19,9 @@ class Position(Base):
     exchange: Mapped[Exchange] = mapped_column(Enum(Exchange, schema="public"))
     symbol: Mapped[str]
     side: Mapped[PositionSide] = mapped_column(Enum(PositionSide))
+    price: Mapped[float]
     quantity: Mapped[float]
+    realized_pnl: Mapped[float]
     opened_at: Mapped[datetime]
     closed_at: Mapped[Optional[datetime]]
     bot_id: Mapped[int] = mapped_column(ForeignKey(Bot.id))
