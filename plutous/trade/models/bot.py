@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ARRAY, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from plutous.trade.enums import BotType
@@ -21,12 +21,12 @@ class Bot(Base):
     allocated_capital: Mapped[float]
     max_position: Mapped[int]
     accumulate: Mapped[bool]
+    alert: Mapped[bool]
+    discord_webhooks: Mapped[list[str]] = mapped_column(ARRAY(String))
 
     api_key: Mapped[ApiKey] = relationship(ApiKey, back_populates="bots")
     strategy: Mapped[Strategy] = relationship(Strategy, back_populates="bots")
-    positions: Mapped[list["Position"]] = relationship(
-        "Position", back_populates="bot"
-    )
+    positions: Mapped[list["Position"]] = relationship("Position", back_populates="bot")
 
     @property
     def exchange(self):

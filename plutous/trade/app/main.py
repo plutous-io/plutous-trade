@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from plutous.app.utils.session import get_session
 from plutous.trade.models import ApiKey, Bot, Strategy
 
-from .models import ApiKeyPost, BotPost, StrategyPost
+from .models import ApiKeyPost, BotGet, BotPatch, BotPost, StrategyPost
 
 app = FastAPI(
     title="Plutous Trade API",
@@ -53,11 +53,43 @@ def create_api_key(
     return api_key
 
 
+@app.get("/bot", response_model=list[BotGet])
+def list_bot(
+    session: Session = Depends(get_session),
+) -> list[BotGet]:
+    bots = session.query(Bot).all()
+    return [BotGet(**bot.dict()) for bot in bots]
+
+
+@app.get("/bot/{bot_id}", response_model=BotGet)
+def get_bot(
+    bot_id: int,
+    session: Session = Depends(get_session),
+) -> BotGet:
+    bot = session.query(Bot).filter(Bot.id == bot_id).first()
+    return BotGet(**bot.dict())
+
+
 @app.post("/bot", response_model=BotPost)
 def create_bot(
-    bot: BotPost,
+    bot_post: BotPost,
     session: Session = Depends(get_session),
 ) -> BotPost:
-    session.add(Bot(**bot.dict()))
+    session.add(Bot(**bot_post.dict()))
     session.commit()
-    return bot
+    return bot_post
+
+
+@app.patch("/bot/{bot_id}", response_model=BotPatch)
+def update_bot(
+    bot_id: int,
+    bot_patch: BotPatch,
+    session: Session = Depends(get_session),
+) -> BotPost:
+    bot = session.query(Bot).filter(Bot.id == bot_id).first()
+
+    for key, value in bot_patch.dict().items():
+        if value is not None:
+            setattr(bot, key, value)
+    session.commit()
+    return bot_patch

@@ -12,7 +12,7 @@ class StrategyPost(BaseModel):
     direction: StrategyDirection
 
 
-class BotPost(BaseModel):
+class BaseBot(BaseModel):
     name: str
     strategy_id: int
     api_key_id: int
@@ -20,6 +20,28 @@ class BotPost(BaseModel):
     allocated_capital: float
     accumulate: bool = True
     max_position: int = 1
+    alert: bool = False
+    discord_webhooks: list[str] = []
+
+
+class BotPost(BaseBot):
+    pass
+
+
+class BotGet(BaseBot):
+    id: int
+
+
+class BotPatch(BaseModel):
+    name: str | None = None
+    strategy_id: int | None = None
+    api_key_id: int | None = None
+    type: BotType | None = None
+    allocated_capital: float | None = None
+    accumulate: bool | None = None
+    max_position: int | None = None
+    alert: bool | None = None
+    discord_webhooks: list[str] | None = None
 
 
 class ApiKeyPost(BaseModel):

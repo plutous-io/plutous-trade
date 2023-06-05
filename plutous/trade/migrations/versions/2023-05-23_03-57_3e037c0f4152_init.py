@@ -58,6 +58,8 @@ def upgrade() -> None:
     sa.Column('allocated_capital', sa.Float(), nullable=False),
     sa.Column('max_position', sa.Integer(), nullable=False),
     sa.Column('accumulate', sa.Boolean(), nullable=False),
+    sa.Column('alert', sa.Boolean(), nullable=False),
+    sa.Column('discord_webhooks', sa.ARRAY(sa.String()), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
     sa.Column('updated_at', sa.TIMESTAMP(), nullable=False),
