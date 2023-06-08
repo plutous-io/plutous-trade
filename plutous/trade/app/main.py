@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from plutous.app.utils.session import get_session
-from plutous.trade.models import ApiKey, Bot, Strategy
+from plutous.trade.models import ApiKey, Bot, Position, Strategy, Trade
 
 from .models import ApiKeyPost, BotGet, BotPatch, BotPost, StrategyPost
 
@@ -93,3 +93,19 @@ def update_bot(
             setattr(bot, key, value)
     session.commit()
     return bot_patch
+
+
+@app.delete("/bot/{bot_id}")
+def delete_bot(
+    bot_id: int,
+    session: Session = Depends(get_session),
+):
+    session.query(Trade).filter(
+        Trade.position_id == Position.id, Position.bot_id == bot_id
+    ).delete(synchronize_session=False)
+    session.query(Position).filter(Position.bot_id == bot_id).delete(
+        synchronize_session=False
+    )
+    session.query(Bot).filter(Bot.id == bot_id).delete(synchronize_session=False)
+    session.commit()
+    return {"message": "Bot deleted"}
