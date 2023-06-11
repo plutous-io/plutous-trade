@@ -1,3 +1,4 @@
+from loguru import logger
 from typer import Typer
 
 from . import database
@@ -8,8 +9,8 @@ apps = [database.app]
 try:
     from plutous.trade.crypto.cli import main as crypto
     apps.append(crypto.app)
-except ImportError:
-    pass
+except ImportError as e:
+    logger.warning(e)
 
 for a in apps:
     app.add_typer(a)
