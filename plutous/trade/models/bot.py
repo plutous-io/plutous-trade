@@ -1,6 +1,7 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import ARRAY, ForeignKey, String
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from plutous.trade.enums import BotType
@@ -23,6 +24,7 @@ class Bot(Base):
     accumulate: Mapped[bool]
     alert: Mapped[bool]
     discord_webhooks: Mapped[list[str]] = mapped_column(ARRAY(String))
+    config: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
 
     api_key: Mapped[ApiKey] = relationship(ApiKey, back_populates="bots")
     strategy: Mapped[Strategy] = relationship(Strategy, back_populates="bots")
