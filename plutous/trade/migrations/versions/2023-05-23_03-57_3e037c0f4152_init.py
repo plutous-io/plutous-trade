@@ -152,6 +152,7 @@ def upgrade() -> None:
         sa.Column("max_position", sa.Integer(), nullable=False),
         sa.Column("accumulate", sa.Boolean(), nullable=False),
         sa.Column("alert", sa.Boolean(), nullable=False),
+        sa.Column("sentry_dsn", sa.String(), nullable=True),
         sa.Column("discord_webhooks", sa.ARRAY(sa.String()), nullable=False),
         sa.Column("config", postgresql.JSONB(), nullable=True),
         sa.Column("id", sa.Integer(), nullable=False),

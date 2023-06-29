@@ -66,7 +66,7 @@ def get_bot(
     bot_id: int,
     session: Session = Depends(get_session),
 ) -> BotGet:
-    bot = session.query(Bot).filter(Bot.id == bot_id).first()
+    bot = session.query(Bot).filter(Bot.id == bot_id).one()
     return BotGet(**bot.dict())
 
 
@@ -85,7 +85,7 @@ def update_bot(
     bot_id: int,
     bot_patch: BotPatch,
     session: Session = Depends(get_session),
-) -> BotPost:
+) -> BotPatch:
     bot = session.query(Bot).filter(Bot.id == bot_id).first()
 
     for key, value in bot_patch.dict().items():

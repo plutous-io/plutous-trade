@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 from plutous.enums import Exchange
 from plutous.trade.enums import AssetType, BotType, StrategyDirection, StrategyType
@@ -21,6 +21,7 @@ class BaseBot(BaseModel):
     accumulate: bool = True
     max_position: int = 1
     alert: bool = False
+    sentry_dsn: HttpUrl | None = None
     discord_webhooks: list[str] = []
 
 
@@ -41,6 +42,7 @@ class BotPatch(BaseModel):
     accumulate: bool | None = None
     max_position: int | None = None
     alert: bool | None = None
+    sentry_dsn: HttpUrl | None = None
     discord_webhooks: list[str] | None = None
 
 

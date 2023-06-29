@@ -23,6 +23,7 @@ class Bot(Base):
     max_position: Mapped[int]
     accumulate: Mapped[bool]
     alert: Mapped[bool]
+    sentry_dsn: Mapped[Optional[str]]
     discord_webhooks: Mapped[list[str]] = mapped_column(ARRAY(String))
     config: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
 
