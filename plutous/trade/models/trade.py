@@ -1,6 +1,7 @@
 from datetime import datetime
+from decimal import Decimal
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, DECIMAL
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from plutous.enums import Exchange
@@ -18,9 +19,9 @@ class Trade(Base):
     asset_type: Mapped[AssetType] = mapped_column(Enum(AssetType))
     action: Mapped[Action] = mapped_column(Enum(Action))
     side: Mapped[PositionSide] = mapped_column(Enum(PositionSide))
-    price: Mapped[float]
-    quantity: Mapped[float]
-    realized_pnl: Mapped[float]
+    price: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
+    quantity: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
+    realized_pnl: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
     datetime: Mapped[datetime]
 
     position: Mapped[Position] = relationship(Position, back_populates="trades")

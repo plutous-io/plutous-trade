@@ -1,6 +1,7 @@
+from decimal import Decimal
 from typing import TYPE_CHECKING, Optional
 
-from sqlalchemy import ARRAY, ForeignKey, String
+from sqlalchemy import ARRAY, DECIMAL, ForeignKey, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -19,7 +20,7 @@ class Bot(Base):
     type: Mapped[BotType] = mapped_column(Enum(BotType))
     strategy_id: Mapped[int] = mapped_column(ForeignKey(Strategy.id))
     api_key_id: Mapped[int] = mapped_column(ForeignKey(ApiKey.id))
-    allocated_capital: Mapped[float]
+    allocated_capital: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
     max_position: Mapped[int]
     accumulate: Mapped[bool]
     alert: Mapped[bool]
