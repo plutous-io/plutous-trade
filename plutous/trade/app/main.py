@@ -38,7 +38,7 @@ def create_strategy(
     strategy: StrategyPost,
     session: Session = Depends(get_session),
 ) -> StrategyPost:
-    session.add(Strategy(**strategy.dict()))
+    session.add(Strategy(**strategy.model_dump()))
     session.commit()
     return strategy
 
@@ -48,7 +48,7 @@ def create_api_key(
     api_key: ApiKeyPost,
     session: Session = Depends(get_session),
 ) -> ApiKeyPost:
-    session.add(ApiKey(**api_key.dict()))
+    session.add(ApiKey(**api_key.model_dump()))
     session.commit()
     return api_key
 
@@ -75,7 +75,12 @@ def create_bot(
     bot_post: BotPost,
     session: Session = Depends(get_session),
 ) -> BotPost:
-    session.add(Bot(**bot_post.dict()))
+    session.add(
+        Bot(
+            sentry_dsn=str(bot_post.sentry_dsn),
+            **bot_post.model_dump(exclude={"sentry_dsn"})
+        )
+    )
     session.commit()
     return bot_post
 
@@ -88,7 +93,7 @@ def update_bot(
 ) -> BotPatch:
     bot = session.query(Bot).filter(Bot.id == bot_id).first()
 
-    for key, value in bot_patch.dict().items():
+    for key, value in bot_patch.model_dump().items():
         if value is not None:
             setattr(bot, key, value)
     session.commit()
