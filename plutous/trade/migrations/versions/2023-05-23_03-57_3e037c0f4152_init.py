@@ -32,6 +32,7 @@ def upgrade() -> None:
         "OKX",
         "PHEMEX",
         "WOO",
+        "MEXC",
         name="exchange",
         schema="public",
     )
