@@ -4,7 +4,7 @@ from sqlalchemy import Index, String
 from sqlalchemy.orm import Mapped, declared_attr, mapped_column, relationship
 from sqlalchemy_utils import EncryptedType
 
-from plutous.config import config
+from plutous.config import CONFIG
 from plutous.enums import Exchange
 
 from .base import Base, Enum
@@ -17,9 +17,9 @@ class ApiKey(Base):
     exchange: Mapped[Exchange] = mapped_column(Enum(Exchange, schema="public"))
     name: Mapped[str]
     key: Mapped[str]
-    secret: Mapped[str] = mapped_column(EncryptedType(String, config.encryption_key))
+    secret: Mapped[str] = mapped_column(EncryptedType(String, CONFIG.encryption_key))
     passphrase: Mapped[Optional[str]] = mapped_column(
-        EncryptedType(String, config.encryption_key), nullable=True
+        EncryptedType(String, CONFIG.encryption_key), nullable=True
     )
 
     bots: Mapped[list["Bot"]] = relationship("Bot", back_populates="api_key")
