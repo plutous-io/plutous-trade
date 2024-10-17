@@ -5,13 +5,14 @@ Revises:
 Create Date: 2023-05-23 03:57:18.342515
 
 """
+
 import sqlalchemy as sa
 import sqlalchemy_utils
 from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "3e037c0f4152"
+revision = "f5b96a26834a"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,6 +49,11 @@ def upgrade() -> None:
         ),
         sa.Column(
             "passphrase",
+            sqlalchemy_utils.types.encrypted.encrypted_type.EncryptedType(),
+            nullable=True,
+        ),
+        sa.Column(
+            "user_token",
             sqlalchemy_utils.types.encrypted.encrypted_type.EncryptedType(),
             nullable=True,
         ),
@@ -149,7 +155,7 @@ def upgrade() -> None:
         ),
         sa.Column("strategy_id", sa.Integer(), nullable=False),
         sa.Column("api_key_id", sa.Integer(), nullable=False),
-        sa.Column("allocated_capital", sa.DECIMAL(20,8), nullable=False),
+        sa.Column("allocated_capital", sa.DECIMAL(20, 8), nullable=False),
         sa.Column("max_position", sa.Integer(), nullable=False),
         sa.Column("accumulate", sa.Boolean(), nullable=False),
         sa.Column("alert", sa.Boolean(), nullable=False),
@@ -211,9 +217,9 @@ def upgrade() -> None:
             sa.Enum("LONG", "SHORT", "FLAT", name="positionside", schema="trade"),
             nullable=False,
         ),
-        sa.Column("price", sa.DECIMAL(20,8), nullable=False),
-        sa.Column("quantity", sa.DECIMAL(20,8), nullable=False),
-        sa.Column("realized_pnl", sa.DECIMAL(20,8), nullable=False),
+        sa.Column("price", sa.DECIMAL(20, 8), nullable=False),
+        sa.Column("quantity", sa.DECIMAL(20, 8), nullable=False),
+        sa.Column("realized_pnl", sa.DECIMAL(20, 8), nullable=False),
         sa.Column("opened_at", sa.DateTime(), nullable=False),
         sa.Column("closed_at", sa.DateTime(), nullable=True),
         sa.Column("bot_id", sa.Integer(), nullable=False),
@@ -282,9 +288,9 @@ def upgrade() -> None:
             sa.Enum("LONG", "SHORT", "FLAT", name="positionside", schema="trade"),
             nullable=False,
         ),
-        sa.Column("price", sa.DECIMAL(20,8), nullable=False),
-        sa.Column("quantity", sa.DECIMAL(20,8), nullable=False),
-        sa.Column("realized_pnl", sa.DECIMAL(20,8), nullable=False),
+        sa.Column("price", sa.DECIMAL(20, 8), nullable=False),
+        sa.Column("quantity", sa.DECIMAL(20, 8), nullable=False),
+        sa.Column("realized_pnl", sa.DECIMAL(20, 8), nullable=False),
         sa.Column("datetime", sa.DateTime(), nullable=False),
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=False),

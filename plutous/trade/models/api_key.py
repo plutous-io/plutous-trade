@@ -21,6 +21,9 @@ class ApiKey(Base):
     passphrase: Mapped[Optional[str]] = mapped_column(
         EncryptedType(String, CONFIG.encryption_key), nullable=True
     )
+    user_token: Mapped[Optional[str]] = mapped_column(
+        EncryptedType(String, CONFIG.encryption_key), nullable=True
+    )
 
     bots: Mapped[list["Bot"]] = relationship("Bot", back_populates="api_key")
 
