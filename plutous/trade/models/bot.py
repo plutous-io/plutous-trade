@@ -20,6 +20,7 @@ class Bot(Base):
     type: Mapped[BotType] = mapped_column(Enum(BotType))
     strategy_id: Mapped[int] = mapped_column(ForeignKey(Strategy.id))
     api_key_id: Mapped[int] = mapped_column(ForeignKey(ApiKey.id))
+    initial_capital: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
     allocated_capital: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
     max_position: Mapped[int]
     accumulate: Mapped[bool]

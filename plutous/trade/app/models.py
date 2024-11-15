@@ -31,6 +31,7 @@ class BotPost(BaseBot):
 
 class BotGet(BaseBot):
     id: int
+    initial_capital: float
 
 
 class BotPatch(BaseModel):

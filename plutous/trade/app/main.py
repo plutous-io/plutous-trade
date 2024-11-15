@@ -78,6 +78,7 @@ def create_bot(
     session.add(
         Bot(
             sentry_dsn=str(bot_post.sentry_dsn),
+            initial_capital=bot_post.allocated_capital,
             **bot_post.model_dump(exclude={"sentry_dsn"})
         )
     )
@@ -96,6 +97,8 @@ def update_bot(
     for key, value in bot_patch.model_dump().items():
         if value is not None:
             setattr(bot, key, value)
+            if key == "allocated_capital":
+                bot.initial_capital = value
     session.commit()
     return bot_patch
 
