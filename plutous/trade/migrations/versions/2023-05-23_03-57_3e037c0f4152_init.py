@@ -26,6 +26,7 @@ def upgrade() -> None:
         "BINANCE_USDM",
         "BITGET",
         "BYBIT",
+        "COINBASE",
         "GATEIO",
         "HUOBI",
         "HYPERLIQUID",
