@@ -165,6 +165,7 @@ def upgrade() -> None:
         sa.Column("allocated_capital", sa.DECIMAL(20, 8), nullable=False),
         sa.Column("max_position", sa.Integer(), nullable=False),
         sa.Column("accumulate", sa.Boolean(), nullable=False),
+        sa.Column("active", sa.Boolean(), nullable=False),
         sa.Column("alert", sa.Boolean(), nullable=False),
         sa.Column("sentry_dsn", sa.String(), nullable=True),
         sa.Column("discord_webhooks", sa.ARRAY(sa.String()), nullable=False),

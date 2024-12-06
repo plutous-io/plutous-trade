@@ -24,6 +24,7 @@ class Bot(Base):
     allocated_capital: Mapped[Decimal] = mapped_column(DECIMAL(20, 8))
     max_position: Mapped[int]
     accumulate: Mapped[bool]
+    active: Mapped[bool]
     alert: Mapped[bool]
     sentry_dsn: Mapped[Optional[str]]
     discord_webhooks: Mapped[list[str]] = mapped_column(ARRAY(String))
